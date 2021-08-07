@@ -18,11 +18,11 @@ class Mnet(nn.Module):
         '''
 
         
-        self.first_block = ConvBlock(in_chans, 2)
+        self.first_block = ConvBlock(in_chans, 16)
         self.ll1 = MaxPool()
-        self.down1 = Down(2, 4)
-        self.up1 = Up(4, 2)
-        self.last_block = nn.Conv2d(2, out_chans, kernel_size=1)
+        self.down1 = Down(32, 48)
+        self.up1 = Up(48, 32)
+        self.last_block = nn.Conv2d(16, out_chans, kernel_size=1)
 
         self.concat = Concat()
         

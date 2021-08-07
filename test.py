@@ -24,4 +24,3 @@ if __name__ == '__main__':
     args.forward_dir = '../result' / args.net_name / 'reconstructions_forward' 
     print(args.forward_dir)
     forward(args)
-
