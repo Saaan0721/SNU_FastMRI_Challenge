@@ -22,16 +22,19 @@ class Mnet(nn.Module):
         self.down1 = Down(32, 64, 16)
         self.down2 = Down(64, 128, 16)
         self.down3 = Down(128, 256, 16)
-        self.middle_block = ConvBlock(256, 128)
+        self.down4 = Down(256, 512, 16)
+        self.middle_block = ConvBlock(512, 256)
+        self.up4 = Up(256, 128, 256)
         self.up3 = Up(128, 64, 128)
         self.up2 = Up(64, 32, 64)
         self.up1 = Up(32, 16, 32)
-        self.last_block = nn.Conv2d(128+64+32+16, out_chans, kernel_size=1)
+        self.last_block = nn.Conv2d(256+128+64+32+16, out_chans, kernel_size=1)
 
         self.ll = MaxPool()
-        self.rl3 = UpSample(128)
-        self.rl2 = UpSample(128+64)
-        self.rl1 = UpSample(128+64+32)
+        self.rl4 = UpSample(256)
+        self.rl3 = UpSample(256+128)
+        self.rl2 = UpSample(256+128+64)
+        self.rl1 = UpSample(256+128+64+32)
         
 
 
@@ -65,11 +68,15 @@ class Mnet(nn.Module):
         d3 = self.down2(d2, ll3)
         ll4 = self.ll(ll3)
         d4 = self.down3(d3, ll4)
+        ll5 = self.ll(ll4)
+        d5 = self.down4(d4, ll5)
 
-        d4 = self.middle_block(d4)
+        d5 = self.middle_block(d5)
 
-        u3 = self.up3(d4, d3)
-        rl3 = self.rl3(d4, u3)
+        u4 = self.up4(d5, d4)
+        rl4 = self.rl4(d5, u4)
+        u3 = self.up3(u4, d3)
+        rl3 = self.rl3(rl4, u3)
         u2 = self.up2(u3, d2)
         rl2 = self.rl2(rl3, u2)
         u1 = self.up1(u2, d1)
