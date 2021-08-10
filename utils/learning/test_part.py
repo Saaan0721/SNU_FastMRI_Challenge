@@ -6,6 +6,7 @@ from collections import defaultdict
 from utils.common.utils import save_reconstructions
 from utils.data.load_data import create_data_loaders
 from utils.model.unet import Unet
+from utils.model.mnet import Mnet
 
 def test(args, model, data_loader):
     model.eval()
@@ -38,12 +39,18 @@ def forward(args):
     torch.cuda.set_device(device)
     print ('Current cuda device ', torch.cuda.current_device())
 
-    model = Unet(in_chans = args.in_chans, out_chans = args.out_chans)
+    if str(args.net_name) == 'Unet':
+      model = Unet(in_chans = args.in_chans, out_chans = args.out_chans)
+    elif str(args.net_name) == 'Mnet':
+      model = Mnet(in_chans = args.in_chans, out_chans = args.out_chans)
+    else:
+      raise Exception(f'Unknown network: {args.net_name}')
+    
     model.to(device=device)
     
     checkpoint = torch.load(args.exp_dir / 'best_model.pt', map_location='cpu')
     print(datetime.datetime.now())
-    print(checkpoint['epoch'], checkpoint['best_val_loss'].item())
+    print(checkpoint['epoch'], checkpoint['best_val_loss'])
     model.load_state_dict(checkpoint['model'])
     
     forward_loader = create_data_loaders(data_path = args.data_path, args = args, isforward = True)

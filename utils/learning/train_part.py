@@ -198,20 +198,21 @@ def train(args):
         if is_new_best:
             print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@NewRecord@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
             start = time.perf_counter()
-            #save_reconstructions(reconstructions, args.val_dir, targets=targets, inputs=inputs)
+            '''
+            save_reconstructions(reconstructions, args.val_dir, targets=targets, inputs=inputs)
             print(
                 f'ForwardTime = {time.perf_counter() - start:.4f}s',
             )
+            '''
 
         if early_stopping(val_loss_data, epoch, args):
           print(f'Early Stopping. Epochs: {epoch+1}')
           break
 
     
-    plt.figure(figsize=(10, 10))
     plt.plot(train_loss_data, label='train')
     plt.plot(val_loss_data, label='val')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
-    plt.show()
+    plt.savefig('loss.png', dpi=300)
