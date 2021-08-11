@@ -11,6 +11,7 @@ from utils.common.utils import save_reconstructions, ssim_loss
 from utils.common.loss_function import SSIMLoss
 from utils.model.unet import Unet
 from utils.model.mnet import Mnet
+from utils.model.munet import MUnet
 
 def train_epoch(args, epoch, model, data_loader, optimizer, loss_type):
     model.train()
@@ -154,6 +155,8 @@ def train(args):
       model = Unet(in_chans = args.in_chans, out_chans = args.out_chans)
     elif str(args.net_name) == 'Mnet':
       model = Mnet(in_chans = args.in_chans, out_chans = args.out_chans)
+    elif str(args.net_name) == 'MUnet':
+      model = MUnet(in_chans = args.in_chans, out_chans = args.out_chans)
     else:
       raise Exception(f'Unknown network: {args.net_name}')
 
