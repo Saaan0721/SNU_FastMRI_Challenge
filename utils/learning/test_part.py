@@ -7,6 +7,7 @@ from utils.common.utils import save_reconstructions
 from utils.data.load_data import create_data_loaders
 from utils.model.unet import Unet
 from utils.model.mnet import Mnet
+from utils.model.munet import MUnet
 
 def test(args, model, data_loader):
     model.eval()
@@ -43,6 +44,8 @@ def forward(args):
       model = Unet(in_chans = args.in_chans, out_chans = args.out_chans)
     elif str(args.net_name) == 'Mnet':
       model = Mnet(in_chans = args.in_chans, out_chans = args.out_chans)
+    elif str(args.net_name) == 'MUnet':
+      model = MUnet(in_chans = args.in_chans, out_chans = args.out_chans)
     else:
       raise Exception(f'Unknown network: {args.net_name}')
     

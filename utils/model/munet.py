@@ -10,8 +10,8 @@ class MUnet(nn.Module):
           self.out_chans = out_chans
 
           self.layer = nn.Sequential(
-              Mnet(in_chans, out_chans),
-              Unet(in_chans, out_chans)
+              Mnet(in_chans, 1),
+              Unet(1, out_chans)
           )
 
 
