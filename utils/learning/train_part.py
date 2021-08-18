@@ -160,6 +160,11 @@ def train(args):
     else:
       raise Exception(f'Unknown network: {args.net_name}')
 
+    if torch.cuda.device_count() > 1:
+      print("Let's use", torch.cuda.device_count(), "GPUs!")
+      # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
+      model = nn.DataParallel(model)
+
     model.to(device=device)
     loss_type = SSIMLoss().to(device=device)
     optimizer = torch.optim.Adam(model.parameters(), args.lr)

@@ -25,6 +25,7 @@ def parse():
     parser.add_argument('--target-key', type=str, default='image_label', help='Name of target key')
     parser.add_argument('--max-key', type=str, default='max', help='Name of max key in attributes')
     parser.add_argument('--patient', type=int, default=3, help='number of checks with no improvement after which training will be stopped')
+    parser.add_argument('--augmentation', type=bool, default=True, help='use image augmendation')
     
 
     args = parser.parse_args()

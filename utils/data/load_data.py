@@ -1,9 +1,10 @@
 import h5py
 import random
-from utils.data.transforms import DataTransform
+from utils.data.transforms import DataTransform, DataHoriFlip
 from torch.utils.data import Dataset, DataLoader
 from torch.utils.data.dataset import random_split
 from pathlib import Path
+
 
 class SliceData(Dataset):
     def __init__(self, root, transform, input_key, target_key, forward=False):
@@ -38,6 +39,7 @@ class SliceData(Dataset):
             else:
                 target = hf[self.target_key][dataslice]
             attrs = dict(hf.attrs)
+
         return self.transform(input, target, attrs, fname.name, dataslice)
 
 
@@ -45,9 +47,11 @@ def create_data_loaders(data_path, args, isforward=False):
     if isforward == False:
         max_key_ = args.max_key
         target_key_ = args.target_key
+        augmentation = args.augmentation
     else:
         max_key_ = -1
         target_key_ = -1
+
     data_storage = SliceData(
         root=data_path,
         transform=DataTransform(isforward, max_key_),
@@ -67,6 +71,7 @@ def create_train_data_loaders(data_path, args, isforward=False):
     if isforward == False:
         max_key_ = args.max_key
         target_key_ = args.target_key
+        augmentation = args.augmentation
     else:
         max_key_ = -1
         target_key_ = -1
@@ -77,6 +82,15 @@ def create_train_data_loaders(data_path, args, isforward=False):
         target_key=target_key_,
         forward = isforward
     )
+    hori_flip_data_storage = SliceData(
+        root=data_path,
+        transform=DataHoriFlip(isforward, max_key_),
+        input_key=args.input_key,
+        target_key=target_key_,
+        forward = isforward
+    )
+
+    data_storage += hori_flip_data_storage
 
     length = len(data_storage)
     val_size = int(length * args.test_size)
