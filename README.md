@@ -54,7 +54,7 @@ evaluate.py가 생성하는 최종 영상의 directory는 아래와 같습니다
 
 따라서 SSIM 측정시 directory를 수정하여야 합니다.
 
-leaderboard score 측정시 아래와 같이 directory를 지정하였습니다.
+예) leaderboard score 측정시 아래와 같이 directory를 지정하였습니다.
 
 ```
 python leaderboard_eval.py -yp '../result/Mnet/reconstructions_forward/'
