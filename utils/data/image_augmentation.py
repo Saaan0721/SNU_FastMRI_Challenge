@@ -1,1 +1,0 @@
-https://pseudo-lab.github.io/Tutorial-Book/chapters/object-detection/Ch3-preprocessing.html
