@@ -10,7 +10,7 @@ Mnet을 이용하여 aliased image를 aliasing free image로 변환하는 프로
 
 ### 1. Image Augmentation
 
-original image, horizontal filped image 두 종류를 사용하여 train data를 2배로 만듭니다.
+original image, horizontal filped image 두 종류를 사용하여 train data의 수를 2배로 만듭니다.
 
 data를 load하는 과정에서 이루어지며 별도의 directory를 생성하지는 않습니다.
 
