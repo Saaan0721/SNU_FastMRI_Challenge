@@ -43,7 +43,7 @@ pip install -U git+https://github.com/albu/albumentations > /dev/null && echo "A
 ```
 python train.py
 python evaluate.py
-python (SSIM 측정).py
+python leaderboard_eval.py
 ```
 
 evaluate.py가 생성하는 최종 영상의 directory는 아래와 같습니다.
