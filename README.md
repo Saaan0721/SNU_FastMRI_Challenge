@@ -10,13 +10,13 @@ Mnet을 이용하여 aliased image를 aliasing free image로 변환하는 프로
 
 ### 1. Image Augmentation
 
-original image, horizontal filped image 두 종류를 사용하여 train data를 2배로 만듭니다.
+original image, horizontal filped image 두 종류를 사용하여 train data의 수를 2배로 만듭니다.
 
 data를 load하는 과정에서 이루어지며 별도의 directory를 생성하지는 않습니다.
 
 ### 2. Data Split
 
-train data와 validatation data를 split할 때 seperate_data.py를 사용하지 않고 load_data.py 내부에서 random_split() 함수를 통해 정해진 비율로 split합니다. (default는 train:validation = 8:2)
+train data와 validatation data를 split할 때 seperate_data.py를 사용하지 않고 load_data.py 내부에서 random_split() 함수를 통해 정해진 비율로 split합니다. (default ratio는 train:validation = 8:2)
 
 ``` Python
 train_dataset, val_dataset = random_split(data_storage, [train_size, val_size])
@@ -43,7 +43,7 @@ pip install -U git+https://github.com/albu/albumentations > /dev/null && echo "A
 ```
 python train.py
 python evaluate.py
-python (SSIM 측정).py
+python leaderboard_eval.py
 ```
 
 evaluate.py가 생성하는 최종 영상의 directory는 아래와 같습니다.
